@@ -26,13 +26,12 @@ public class LeaderboardClientPactTest {
                 .uponReceiving("a request to record a score")
                 .path("/some/api/endpoint")
                 .method("POST")
-                .body("{\"some_json\": \"in the request\"}")
+                .body("{\"someString\": \"some string\", \"someNumber\": 123}")
                 .willRespondWith()
                 .status(200)
                 .body(new PactDslJsonBody()
-                        .stringType("some_string_parameter", "with example value")
-                        .integerType("some_int_parameter", 42)
-                        .booleanType("some_bool_parameter", false)
+                        .stringType("someString", "with example value")
+                        .integerType("someNumber", 42)
                 )
                 .toPact();
 

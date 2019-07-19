@@ -1,0 +1,70 @@
+{
+  "provider": {
+    "name": "leaderboard-service"
+  },
+  "consumer": {
+    "name": "game-service"
+  },
+  "interactions": [
+    {
+      "description": "a request to record a score",
+      "request": {
+        "method": "POST",
+        "path": "/some/api/endpoint",
+        "body": {
+          "someString": "some string",
+          "someNumber": 123
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset\u003dUTF-8"
+        },
+        "body": {
+          "someNumber": 42,
+          "someString": "with example value"
+        },
+        "matchingRules": {
+          "body": {
+            "$.someString": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.someNumber": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset\u003d[\\w\\-]+)?"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "3.6.11"
+    }
+  }
+}

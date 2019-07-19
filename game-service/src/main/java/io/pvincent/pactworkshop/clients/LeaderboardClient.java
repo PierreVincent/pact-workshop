@@ -1,6 +1,8 @@
 package io.pvincent.pactworkshop.clients;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.pvincent.pactworkshop.score.GameScore;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -24,7 +26,7 @@ public class LeaderboardClient {
         String recordScoreUrl = baseUrl + "/some/api/endpoint";
 
         // WHAT TO SET IN PAYLOAD?
-        RecordScoreRequestBody request = new RecordScoreRequestBody();
+        RecordScoreRequestBody request = new RecordScoreRequestBody("some string", 123);
 
         HttpEntity<RecordScoreRequestBody> requestEntity = new HttpEntity<>(request);
         ResponseEntity<RecordScoreResponseBody> responseEntity =
@@ -42,12 +44,54 @@ public class LeaderboardClient {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class RecordScoreRequestBody {
-        // WHAT PAYLOAD TO SEND?
+
+        private final String someString;
+        private final int someNumber;
+
+        @JsonCreator
+        RecordScoreRequestBody(
+                @JsonProperty("someString") String someString,
+                @JsonProperty("someNumber") int someNumber) {
+            this.someString = someString;
+            this.someNumber = someNumber;
+        }
+
+        @JsonProperty
+        public String getSomeString() {
+            return someString;
+        }
+
+        @JsonProperty
+        public int getSomeNumber() {
+            return someNumber;
+        }
+
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class RecordScoreResponseBody {
-        // WHAT PAYLOAD TO EXPECT BACK?
+
+        private final String someString;
+        private final int someNumber;
+
+        @JsonCreator
+        public RecordScoreResponseBody(
+                @JsonProperty("someString") String someString,
+                @JsonProperty("someNumber") int someNumber) {
+            this.someString = someString;
+            this.someNumber = someNumber;
+        }
+
+        @JsonProperty
+        public String getSomeString() {
+            return someString;
+        }
+
+        @JsonProperty
+        public int getSomeNumber() {
+            return someNumber;
+        }
+
     }
 
 }
