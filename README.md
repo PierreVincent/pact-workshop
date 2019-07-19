@@ -64,7 +64,7 @@ Once you have both application started, you should be able to send requests to t
 Example:
 
 ```
-curl -X POST -H "Content-Type: application/json" --data '{"game":"headsortails", "choice": "tails"}' http://localhost:8080/play
+curl -X POST -H "Content-Type: application/json" --data '{"username": "pierre", game":"headsortails", "choice": "tails"}' http://localhost:8080/play
 
 # Output: {"won":false,"message":"Heads: you lost!","totalPlays":4,"totalWins":3,"winRate":75}
 ```
