@@ -24,67 +24,71 @@ public class ScoreController {
         this.scoresStorageService = scoresStorageService;
     }
 
-    // WHAT IS THE ENDPOINT?
-    @PostMapping("/some/api/endpoint")
+    @PostMapping("/recordScore")
     @ResponseBody
     public ResponseEntity<RecordScoreResponseBody> recordScore(@RequestBody RecordScoreRequestBody request) {
 
-        // WHERE ARE THESE PARAMETERS COMING FROM?
-        GameScore newScore = scoresStorageService.recordScore("some_username", "some_game", true);
+        GameScore newScore = scoresStorageService.recordScore(request.getUser(), request.getGame(), request.isWon());
 
-        // WHAT IS THE RESPONSE BODY?
-        RecordScoreResponseBody response = new RecordScoreResponseBody("some_string", 123);
+        RecordScoreResponseBody response = new RecordScoreResponseBody(newScore.getPlayed(), newScore.getWon());
         return ResponseEntity.of(Optional.of(response));
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class RecordScoreRequestBody {
 
-        private final String someString;
-        private final int someNumber;
+        private final String user;
+        private final String game;
+        private final boolean won;
 
         @JsonCreator
         public RecordScoreRequestBody(
-                @JsonProperty("some_string") String someString,
-                @JsonProperty("some_number") int someNumber) {
-            this.someString = someString;
-            this.someNumber = someNumber;
+                @JsonProperty("user") String user,
+                @JsonProperty("game") String game,
+                @JsonProperty("won") boolean won) {
+            this.user = user;
+            this.game = game;
+            this.won = won;
         }
 
         @JsonProperty
-        public String getSomeString() {
-            return someString;
+        public String getUser() {
+            return user;
         }
 
         @JsonProperty
-        public int getSomeNumber() {
-            return someNumber;
+        public String getGame() {
+            return game;
         }
 
+        @JsonProperty
+        public boolean isWon() {
+            return won;
+        }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class RecordScoreResponseBody {
 
-        private final String someString;
-        private final int someNumber;
+        private final int gamesPlayed;
+        private final int gamesWon;
 
         @JsonCreator
         public RecordScoreResponseBody(
-                @JsonProperty("some_string") String someString,
-                @JsonProperty("some_number") int someNumber) {
-            this.someString = someString;
-            this.someNumber = someNumber;
+                @JsonProperty("gamesPlayed") int gamesPlayed,
+                @JsonProperty("gamesPlayed") int gamesWon) {
+            this.gamesPlayed = gamesPlayed;
+            this.gamesWon = gamesWon;
         }
 
         @JsonProperty
-        public String getSomeString() {
-            return someString;
+        public int getGamesPlayed() {
+            return gamesPlayed;
         }
 
         @JsonProperty
-        public int getSomeNumber() {
-            return someNumber;
+        public int getGamesWon() {
+            return gamesWon;
         }
     }
 
