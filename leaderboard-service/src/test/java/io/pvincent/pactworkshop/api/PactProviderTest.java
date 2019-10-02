@@ -10,8 +10,8 @@ import io.pvincent.pactworkshop.score.ScoresStorageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -21,7 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @PactFolder("pacts")
 public class PactProviderTest {
 
-    @MockBean
+    @Autowired
     private ScoresStorageService scoresStorageService;
 
     @BeforeEach

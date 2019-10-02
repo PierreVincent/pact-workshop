@@ -28,7 +28,7 @@ public class ScoreController {
     @ResponseBody
     public ResponseEntity<RecordScoreResponseBody> recordScore(@RequestBody RecordScoreRequestBody request) {
 
-        GameScore newScore = scoresStorageService.recordScore(request.getUser(), request.getGame(), request.isWon());
+        GameScore newScore = scoresStorageService.recordScore(request.getUsername(), request.getGame(), request.isWon());
 
         RecordScoreResponseBody response = new RecordScoreResponseBody(newScore.getPlayed(), newScore.getWon());
         return ResponseEntity.of(Optional.of(response));
@@ -37,23 +37,23 @@ public class ScoreController {
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class RecordScoreRequestBody {
 
-        private final String user;
+        private final String username;
         private final String game;
         private final boolean won;
 
         @JsonCreator
         public RecordScoreRequestBody(
-                @JsonProperty("user") String user,
+                @JsonProperty("username") String username,
                 @JsonProperty("game") String game,
                 @JsonProperty("won") boolean won) {
-            this.user = user;
+            this.username = username;
             this.game = game;
             this.won = won;
         }
 
         @JsonProperty
-        public String getUser() {
-            return user;
+        public String getUsername() {
+            return username;
         }
 
         @JsonProperty
