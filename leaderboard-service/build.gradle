@@ -7,6 +7,13 @@ buildscript {
     }
 }
 
+plugins {
+    id "com.wiredforcode.spawn" version "0.8.2"
+    id "au.com.dius.pact" version "4.1.7"
+}
+
+import com.wiredforcode.gradle.spawn.*
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
@@ -15,8 +22,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 
 bootJar {
-    baseName = 'pact-workshop-leaderboard-service'
-    version =  '1.0.0'
+    archiveBaseName = 'pact-workshop-leaderboard-service'
 }
 
 repositories {
@@ -29,8 +35,36 @@ targetCompatibility = 1.8
 mainClassName = "io.pvincent.pactworkshop.Application"
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile("org.springframework.boot:spring-boot-starter-web:2.2.10.RELEASE")
+    testCompile('org.springframework.boot:spring-boot-starter-test:2.2.10.RELEASE')
     testCompile('org.junit.jupiter:junit-jupiter:5.4.0')
     testCompile("au.com.dius:pact-jvm-provider-junit5_2.12:3.6.11")
+}
+
+task startProvider(type: SpawnProcessTask, dependsOn: 'assemble') {
+    command "java -Dspring.profiles.active=test -jar build/libs/pact-workshop-leaderboard-service.jar"
+    ready 'Started Application'
+}
+
+task stopProvider(type: KillProcessTask) {}
+
+pact {
+    serviceProviders {
+        'leaderboard-service' {
+            startProviderTask = startProvider
+            terminateProviderTask = stopProvider
+
+            protocol = 'http'
+            host = 'localhost'
+            port = 8081
+            path = '/'
+
+            hasPactWith('gameService') {
+                pactSource = file('pacts/game-service-leaderboard-service.json')
+            }
+
+        }
+
+    }
+
 }
