@@ -44,11 +44,11 @@ Start service:
 
 The `leaderboard-service` runs on port `8081` by default. This can be configured under `application.properties`. Note that if you are changing this port, you will need to update `leaderboardService.baseUrl` in the `game-service` configuration accordingly.
 
-Run tests:
+Run pact test verification:
 
 ```
 # in leaderboard-service/ directory
-./gradlew test
+./gradlew pactVerify
 ```
 
 Start service:
