@@ -15,8 +15,8 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 
 bootJar {
-    baseName = 'pact-workshop-game-service'
-    version =  '1.0.0'
+    archiveBaseName = 'pact-workshop-game-service'
+    archiveVersion =  '1.0.0'
 }
 
 repositories {
