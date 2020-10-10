@@ -31,5 +31,7 @@ mainClassName = "io.pvincent.pactworkshop.Application"
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile("junit:junit")
+    testCompile("org.mock-server:mockserver-netty:5.11.1")
+    testCompile("org.mock-server:mockserver-client-java:5.11.1")
     testCompile("au.com.dius:pact-jvm-consumer-junit_2.12:3.6.11")
 }
