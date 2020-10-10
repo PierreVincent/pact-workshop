@@ -39,7 +39,7 @@ mainClassName = "io.pvincent.pactworkshop.Application"
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:2.2.10.RELEASE")
     testCompile('org.springframework.boot:spring-boot-starter-test:2.2.10.RELEASE')
-    testCompile('org.junit.jupiter:junit-jupiter:5.4.0')
+    testCompile("junit:junit")
 }
 
 task startProvider(type: SpawnProcessTask, dependsOn: 'assemble') {

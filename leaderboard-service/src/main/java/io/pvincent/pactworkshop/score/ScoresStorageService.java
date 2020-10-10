@@ -1,5 +1,6 @@
 package io.pvincent.pactworkshop.score;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -16,6 +17,20 @@ public class ScoresStorageService {
         scoresDb.get(username).put(game, newScore);
 
         return newScore;
+    }
+
+    public String getLeader(String game) {
+        String leader = "";
+        int mostWon = 0;
+        for (Map.Entry<String, ConcurrentMap<String, GameScore>> userGames: scoresDb.entrySet()) {
+            GameScore score = userGames.getValue().get(game);
+            int won = score == null ? 0 : score.getWon();
+            if (won > mostWon) {
+                mostWon = won;
+                leader = userGames.getKey();
+            }
+        }
+        return leader;
     }
 
 }
