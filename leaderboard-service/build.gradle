@@ -38,7 +38,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:2.2.10.RELEASE")
     testCompile('org.springframework.boot:spring-boot-starter-test:2.2.10.RELEASE')
     testCompile('org.junit.jupiter:junit-jupiter:5.4.0')
-    testCompile("au.com.dius:pact-jvm-provider-junit5_2.12:3.6.11")
 }
 
 task startProvider(type: SpawnProcessTask, dependsOn: 'assemble') {
@@ -62,9 +61,6 @@ pact {
             hasPactWith('gameService') {
                 pactSource = file('pacts/game-service-leaderboard-service.json')
             }
-
         }
-
     }
-
 }
