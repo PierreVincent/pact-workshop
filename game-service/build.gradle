@@ -44,7 +44,7 @@ dependencies {
 //pact {
 //    publish {
 //        providerVersion = { gameServiceVersion }
-//        pactBrokerUrl = ''
-//        pactBrokerToken = ''
+//        pactBrokerUrl = 'https://YOUR_ACCOUNT.pactflow.io'
+//        pactBrokerToken = 'YOUR_TOKEN'
 //    }
 //}

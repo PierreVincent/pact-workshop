@@ -50,6 +50,11 @@ task startProvider(type: SpawnProcessTask, dependsOn: 'assemble') {
 task stopProvider(type: KillProcessTask) {}
 
 pact {
+//    broker {
+//        pactBrokerUrl = 'https://YOUR_ACCOUNT.pactflow.io'
+//        pactBrokerToken = 'YOUR_TOKEN'
+//    }
+
     serviceProviders {
         'leaderboard-service' {
             providerVersion = { leaderboardServiceVersion }
@@ -66,9 +71,7 @@ pact {
                 pactSource = file('pacts/game-service-leaderboard-service.json')
             }
 
-//            hasPactsFromPactBroker('',
-//                    authentication: ['Bearer', '']
-//            )
+//            fromPactBroker { }
         }
     }
 }
