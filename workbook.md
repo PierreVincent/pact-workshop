@@ -1,4 +1,4 @@
-# PACT Workshop: Consumer-driven contracts in practice - Workbook
+# Workbook
 
 ## Thinking about API design
 
