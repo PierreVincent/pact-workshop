@@ -24,14 +24,14 @@ public class LeaderboardClientPactTest {
                 .consumer("game-service")
                 .hasPactWith("leaderboard-service")
                 .uponReceiving("a request to record a score")
-                .path("/some/api/endpoint")
+                .path("/users/john/games/tic-tac-toe/score")
                 .method("POST")
-                .body("{\"someString\": \"some string\", \"someNumber\": 123}")
+                .body("{\"won\": true}")
                 .willRespondWith()
                 .status(200)
                 .body(new PactDslJsonBody()
-                        .stringType("someString", "with example value")
-                        .integerType("someNumber", 42)
+                        .integerType("gamesWon", 3)
+                        .integerType("gamesPlayed", 4)
                 )
                 .toPact();
 
@@ -40,7 +40,7 @@ public class LeaderboardClientPactTest {
             LeaderboardClient client = new LeaderboardClient(mockServer.getUrl());
 
             GameScore expectedResponse = new GameScore(4, 3);
-            assertEquals(client.recordScore("john", "tic-tac-toe", true), expectedResponse);
+            assertEquals(expectedResponse, client.recordScore("john", "tic-tac-toe", true));
         });
 
         if (result instanceof PactVerificationResult.Error) {

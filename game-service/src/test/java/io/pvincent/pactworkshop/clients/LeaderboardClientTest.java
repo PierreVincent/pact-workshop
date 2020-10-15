@@ -3,6 +3,7 @@ package io.pvincent.pactworkshop.clients;
 import io.pvincent.pactworkshop.score.GameScore;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.JsonBody;
@@ -12,6 +13,7 @@ import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
+@Ignore
 public class LeaderboardClientTest {
 
     private static ClientAndServer mockServer;
