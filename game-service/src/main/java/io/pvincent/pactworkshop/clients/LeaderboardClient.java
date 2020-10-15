@@ -23,10 +23,10 @@ public class LeaderboardClient {
     public GameScore recordScore(String username, String game, boolean won) throws LeaderboardClientException {
 
         // WHAT ENDPOINT TO CALL?
-        String recordScoreUrl = baseUrl + "/some/api/endpoint";
+        String recordScoreUrl = baseUrl + "/users/" +username+"/games/"+game+"/score";
 
         // WHAT TO SET IN PAYLOAD?
-        RecordScoreRequestBody request = new RecordScoreRequestBody("some string", 123);
+        RecordScoreRequestBody request = new RecordScoreRequestBody(won);
 
         HttpEntity<RecordScoreRequestBody> requestEntity = new HttpEntity<>(request);
         ResponseEntity<RecordScoreResponseBody> responseEntity =
@@ -38,32 +38,24 @@ public class LeaderboardClient {
             RecordScoreResponseBody response = responseEntity.getBody();
 
             // HOW TO FILL IN THE SCORE FROM RESPONSE?
-            return new GameScore(4, 3);
+            return new GameScore(response.getGamesPlayed(), response.getGamesWon());
         }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class RecordScoreRequestBody {
 
-        private final String someString;
-        private final int someNumber;
+        private final boolean won;
 
         @JsonCreator
         RecordScoreRequestBody(
-                @JsonProperty("someString") String someString,
-                @JsonProperty("someNumber") int someNumber) {
-            this.someString = someString;
-            this.someNumber = someNumber;
+                @JsonProperty("won") boolean won) {
+            this.won = won;
         }
 
         @JsonProperty
-        public String getSomeString() {
-            return someString;
-        }
-
-        @JsonProperty
-        public int getSomeNumber() {
-            return someNumber;
+        public boolean isWon() {
+            return won;
         }
 
     }
@@ -71,25 +63,25 @@ public class LeaderboardClient {
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class RecordScoreResponseBody {
 
-        private final String someString;
-        private final int someNumber;
+        private final int gamesPlayed;
+        private final int gamesWon;
 
         @JsonCreator
         public RecordScoreResponseBody(
-                @JsonProperty("someString") String someString,
-                @JsonProperty("someNumber") int someNumber) {
-            this.someString = someString;
-            this.someNumber = someNumber;
+                @JsonProperty("gamesPlayed") int gamesPlayed,
+                @JsonProperty("gamesWon") int gamesWon) {
+            this.gamesPlayed = gamesPlayed;
+            this.gamesWon = gamesWon;
         }
 
         @JsonProperty
-        public String getSomeString() {
-            return someString;
+        public int getGamesPlayed() {
+            return gamesPlayed;
         }
 
         @JsonProperty
-        public int getSomeNumber() {
-            return someNumber;
+        public int getGamesWon() {
+            return gamesWon;
         }
 
     }
